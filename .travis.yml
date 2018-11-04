@@ -1,0 +1,28 @@
+language: go
+go:
+  - 1.x
+sudo: required
+services: docker
+env:
+    global:
+      - QEMU_VER=v2.9.1
+      - DOCKER_REPO=registry.dispatch.sh/maartje/trainlove
+    matrix:
+      - ARCH=amd64 QQEMU_ARCH=x86_64
+      # - ARCH=armhf QEMU_ARCH=arm
+      # - ARCH=arm64 QEMU_ARCH=aarch64
+
+before_install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register
+
+install:
+  - wget -O hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.37.1/hugo_0.37.1_Linux-64bit.deb
+  - sudo dpkg -i hugo.deb
+
+script:
+  - hugo
+  - if [ "$OLD" == "false" ]; then docker build -t $DOCKER_REPO:$ARCH-latest --build-arg ARCH="$ARCH" ./; fi
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin registry.dispatch.sh
+  - if [ "$ARCH" == "amd64" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then docker push $DOCKER_REPO:$ARCH-latest; fi
