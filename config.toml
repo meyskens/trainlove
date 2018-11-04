@@ -1,0 +1,38 @@
+# Settings
+baseurl = "https://trainlover.be/"
+languageCode = "en-us"
+title = "Belgian Trainlover"
+theme = "phugo"
+
+[params]
+
+    # Meta
+    description = "Belgian Trainlover"
+    keywords = "nmbs, sncb, trains, photos"
+    
+    # Headerbar links
+    # Do not put here too many links,
+    # it will break mobile appearance
+
+    [[params.header.links]]
+    name = "About"
+    url = "#footer"
+    icon = "fa-info-circle"    
+    
+    # Footer panel
+    
+    [params.footer.social]
+    headline = "Follow me"
+
+    [[params.footer.social.links]]
+    label = "Instagram"
+    url = "https://www.instagram.com/belgiantrainlover/"
+    icon = "fa-instagram"
+ 
+    [params.footer.paragraph]
+    headline = "Who am I?"
+    text = "I am just a normal girl who loves trains. All these photos are taken with my Canon DSLR I always take with me. <br> I also don't believe in copyright, all photos here are licensed CC-BY. In simple words: use them however you like just make sure my site is mentioned as the creator!"    
+    
+    # Copyright
+    [params.footer.copyright]
+    name = "CC-BY trainlover.be"
